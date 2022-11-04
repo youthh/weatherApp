@@ -1,0 +1,15 @@
+
+
+.container{
+  max-width: 1500px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 10px;
+}
+
+.inner__app{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
