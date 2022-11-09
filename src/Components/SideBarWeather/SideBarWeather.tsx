@@ -1,28 +1,38 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./SideBarWeather.css";
 import home from "../../Images/HomeIcon.svg";
 import search from "../../Images/SearchIcon.svg";
-import cloud from "../../Images/Cloudy.svg";
+import countOfClouds from "../../Images/CountOfClouds.svg";
+import brokenCloud from "../../Images/brokenCloud.svg";
 import { weekDay } from "../../Data/WeekDay";
 import { useAppSelector } from "../../Hooks/hooks";
-import { weatherSelector } from "../../Slices/weatherSlice";
-const SideBarWeather = () => {
-  const { city, country } = useAppSelector(weatherSelector);
-  const [data, setData] = useState({
-    hours: new Date().getHours(),
-    min: new Date().getMinutes(),
-  });
-  useEffect(() => {
-    setInterval(() => {
-      const date = new Date();
-      setData((prevState) => {
-        return (prevState = {
-          hours: date.getHours(),
-          min: date.getMinutes(),
-        });
-      });
-    }, 60000);
-  });
+import {
+  getCurrentWeatherTodaySelector,
+  weatherSelector,
+} from "../../Slices/weatherSlice";
+import { getWeatherIcon } from "../../Data/weatherIconsData";
+import { getCurrentTime } from "../../Data/converDate";
+import InputComp from "./Input";
+
+interface SideBarWeatherProps {
+  icon: string;
+  temp: number;
+  city: string;
+  country: string;
+  date: string | number;
+  description: string;
+  cloud: number;
+}
+
+const SideBarWeather = ({
+  icon,
+  country,
+  cloud,
+  date,
+  temp,
+  description,
+  city,
+}: SideBarWeatherProps) => {
   return (
     <div className="sidebar__inner">
       <div className="sidebar__top">
@@ -33,28 +43,39 @@ const SideBarWeather = () => {
             className="sidebar__input"
             type="text"
           />
+          <InputComp />
         </div>
+
         <button className="sidebar__btn--home">
           <img src={home} alt="home" />
         </button>
       </div>
       <div className="box__sidebar--weather-icon">
-        <img src={cloud} alt="cloud" />
+        <img
+          src={getWeatherIcon(icon)[0].img}
+          className="box__sidebar__weather--img"
+          alt="cloud"
+        />
       </div>
       <div className="box__sidebar__weather--info">
-        <p className="box_sidebar__weather--temperature">9°</p>
+        <p className="box_sidebar__weather--temperature">{temp}°</p>
         <span className="box_sidebar__weather--temperature-format">C</span>
         <h1 className="box_sidebar__weather--city">{city + ",  " + country}</h1>
         <p className="box_sidebar__weather--date">
           {weekDay[new Date().getDay()]},
         </p>
         <p className="box_sidebar__weather--time">
-          {data.hours + ":" + data.min}
+          {getCurrentTime(Number(date) / 1000)}
         </p>
       </div>
       <div>
-        <p className="clouds">Clouds - 75%</p>
-        <p className="clouds">Broken clouds</p>
+        <p className="clouds">
+          <img src={countOfClouds} alt="" /> Clouds - {cloud}%
+        </p>
+        <p className="clouds broken__clouds">
+          <img src={brokenCloud} alt="cloud_description" />
+          {description}
+        </p>
       </div>
     </div>
   );

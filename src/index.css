@@ -8,13 +8,20 @@ body {
   box-sizing: border-box;
   font-family: "Roboto", sans-serif;
   font-style: normal;
+  background: #F6F6F8;
+
   color: #000000;
-  background: #39457c;
   font-size: 15px;
   line-height: 18px;
 }
 
+* { box-sizing: border-box; }
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+body, html {
+  height: 100%;
 }

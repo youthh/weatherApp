@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import SideBarWeather from "../SideBarWeather/SideBarWeather";
 import "./AppLayout.css";
 import WeatherContentTop from "../WeatherContent/ContentTop/WeatherContentTop";
-import WeekDay from "../WeatherContent/WeekDay/WeekDay";
+import WeekDayContainer from "../WeatherContent/WeekDay/WeekDayContainer";
 import ContentBottom from "../WeatherContent/ContentBottom/ContentBottom";
 import { useAppDispatch, useAppSelector } from "../../Hooks/hooks";
 import {
@@ -10,40 +10,53 @@ import {
   setCoordinates,
   weatherSelector,
 } from "../../Slices/weatherSlice";
+import { Box, CircularProgress } from "@mui/material";
+import SideBarContainer from "../SideBarWeather/SideBarContainer";
 const AppLayout = () => {
   const dispatch = useAppDispatch();
+  const [tab, setTab] = useState("day");
+  const [isLoading, setLoading] = useState(false);
   const options = {
     enableHighAccuracy: true,
     timeout: 5000,
     maximumAge: 0,
   };
-  const { lat, lon } = useAppSelector(weatherSelector);
-
-  function success(pos: { coords: any }) {
-    const crd = pos.coords;
-    dispatch(
-      setCoordinates({
-        lat: crd.latitude.toFixed(2),
-        lon: crd.longitude.toFixed(2),
-      })
-    );
-  }
 
   function error(err: { code: any; message: any }) {
     console.warn(`ERROR(${err.code}): ${err.message}`);
   }
 
   useEffect(() => {
-    //dispatch(getWeatherThunk({ lat, lon }));
+    navigator.geolocation.getCurrentPosition(
+      (position: GeolocationPosition) => {
+        setLoading(true);
+        dispatch(
+          getWeatherThunk({
+            lat: position.coords.latitude,
+            lon: position.coords.longitude,
+          })
+        ).then(() => setLoading(false));
+      },
+      error,
+      options
+    );
   }, []);
-
-  navigator.geolocation.getCurrentPosition(success, error, options);
-  return (
+  return isLoading ? (
+    <div className="boxCircle">
+      <CircularProgress
+        style={{
+          opacity: isLoading ? "1" : "0",
+          transition: ".3s",
+        }}
+        size={100}
+      />
+    </div>
+  ) : (
     <div className="app__layout-inner">
-      <SideBarWeather />
+      <SideBarContainer />
       <div className="weather__content">
-        <WeatherContentTop />
-        <WeekDay />
+        <WeatherContentTop setTab={setTab} tab={tab} />
+        <WeekDayContainer tab={tab} />
         <ContentBottom />
       </div>
     </div>
