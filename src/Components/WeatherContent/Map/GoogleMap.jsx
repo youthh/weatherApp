@@ -1,6 +1,6 @@
 import React from "react";
 import GoogleMapReact from "google-map-react";
-
+import "../../AppLayout/AppLayout.css";
 export default function SimpleMap() {
   const defaultProps = {
     center: {
@@ -11,7 +11,7 @@ export default function SimpleMap() {
   };
 
   return (
-    <div style={{ height: "450px", width: "600px" }}>
+    <div className="map_box">
       <GoogleMapReact
         bootstrapURLKeys={{ key: "AIzaSyBPAN9GOUr1d1bFXPbFvCbGjDteeXWr5Dc" }}
         defaultCenter={defaultProps.center}

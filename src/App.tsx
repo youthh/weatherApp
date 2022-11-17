@@ -1,6 +1,7 @@
 import React from "react";
 import "./App.css";
 import "./Reset.css";
+import "../src/Style/mediaStyle.css";
 import AppLayout from "./Components/AppLayout/AppLayout";
 
 function App() {

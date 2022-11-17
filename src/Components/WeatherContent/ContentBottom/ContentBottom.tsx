@@ -9,6 +9,7 @@ import { useAppSelector } from "../../../Hooks/hooks";
 import { getCurrentWeatherTodaySelector } from "../../../Slices/weatherSlice";
 import SimpleMap from "../Map/GoogleMap";
 import UvIndex from "./UVIndex";
+
 const ContentBottom = () => {
   const { humidity, wind, tepmMax, tepmMin, visible } = useAppSelector(
     getCurrentWeatherTodaySelector
@@ -20,10 +21,15 @@ const ContentBottom = () => {
       <div className="box__highlights-bottom">
         <div className="highlights__items">
           <UvIndex />
+
           <WindStatus wind={wind} />
+
           <SunsetRise />
+
           <Humidity humidity={humidity} />
+
           <Visibility visible={visible} />
+
           <Temperature tepmMax={tepmMax} tepmMin={tepmMin} />
         </div>
         <SimpleMap />

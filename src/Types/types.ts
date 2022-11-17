@@ -8,6 +8,15 @@ export type Location = {
   lon: number | null;
   city: string;
   country: string;
+  timezone: number;
+};
+
+export type SearchCityFields = {
+  name: string;
+  lat: number;
+  lon: number;
+  state?: string;
+  country: string;
 };
 
 export type DayWeather = {
@@ -24,6 +33,7 @@ export interface dayItemProps {
   mintemp: number;
   maxTemp: number;
   tab: string;
+  timezone?: number;
 }
 
 export interface WeekDayItemProps {
@@ -38,8 +48,8 @@ export interface listItemWeather {
   main: {
     temp: 296.76;
     feels_like: 296.98;
-    temp_min: 296.76;
-    temp_max: 297.87;
+    temp_min: number;
+    temp_max: number;
     pressure: 1015;
     sea_level: 1015;
     grnd_level: 933;

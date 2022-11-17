@@ -1,61 +1,71 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getWeather } from "../Api/weatherService";
-import {
-  Coordinates,
-  listItemWeather,
-  Location,
-  responseGetWeather,
-} from "../Types/types";
+import { listItemWeather, Location, responseGetWeather } from "../Types/types";
 import { RootState } from "../Redux/store";
 import {
+  getDataLocation,
+  getDataWeatherToday,
   getForeCastForToday,
   getWeatherWeek,
 } from "../Logics/weatherSliceLogic";
 
 export const getWeatherThunk = createAsyncThunk(
   "weather/getWeatherThunk",
-  async (data: Coordinates) => {
-    return await getWeather(data.lat, data.lon);
+  async (data: {
+    lat: number | null;
+    lon: number | null;
+    measurement: string;
+  }) => {
+    return await getWeather(data.lat, data.lon, data.measurement);
   }
 );
 
 interface initialState {
   forecastForWeek: listItemWeather[];
+  HourlyForecast: listItemWeather[];
   location: Location;
   weatherToday: {
-    weatherInterval: listItemWeather[];
-    sun: { sunrise: number; sunset: number };
+    sunrise: number;
+    sunset: number;
     wind: number;
-    main: { max: number; min: number; tempNow: number; humidity: number };
+    temp_max: number;
+    temp_min: number;
+    temp: number;
+    humidity: number;
     visibility: number;
     clouds: number;
-    weather: {
-      icon: string;
-      description: string;
-    };
+    icon: string;
+    description: string;
   };
+  measurement: string;
+  measurementSign: string;
 }
 
 const initialState: initialState = {
   forecastForWeek: [],
+  HourlyForecast: [],
   location: {
+    timezone: 0,
     country: "UA",
     city: "Kiev",
     lon: 49,
     lat: 30,
   },
   weatherToday: {
-    weatherInterval: [],
-    sun: { sunrise: 0, sunset: 0 },
+    sunrise: 0,
+    sunset: 0,
     wind: 0,
-    main: { max: 0, min: 0, tempNow: 0, humidity: 0 },
+    temp_max: 0,
+    temp_min: 0,
+    temp: 0,
+    humidity: 0,
     visibility: 0,
     clouds: 0,
-    weather: {
-      icon: "01d",
-      description: "",
-    },
+    icon: "01d",
+    description: "",
   },
+  measurementSign: "C",
+  measurement: "metric",
 };
 
 const weatherSlice = createSlice({
@@ -66,38 +76,34 @@ const weatherSlice = createSlice({
     setCoordinates: (state, action) => {
       state.location = action.payload;
     },
+    setSearchCoordinate: (state, action) => {
+      state.location.lon = action.payload.lon;
+      state.location.lat = action.payload.lat;
+    },
+    setMeasurement: (state, action: PayloadAction<string>) => {
+      state.measurement = action.payload;
+    },
+    setMeasurementSign: (state, action) => {
+      state.measurementSign = action.payload;
+    },
   },
 
   extraReducers: (builder) => {
     builder.addCase(
       getWeatherThunk.fulfilled,
       (state, action: PayloadAction<responseGetWeather>) => {
-        console.log(action.payload);
-        state.location = {
-          country: action.payload.city.country,
-          city: action.payload.city.name,
-          lon: action.payload.city.coord.lon,
-          lat: action.payload.city.coord.lat,
-        };
-        state.weatherToday.sun = {
-          sunrise: action.payload.city.sunrise,
-          sunset: action.payload.city.sunset,
-        };
+        state.location = getDataLocation(action.payload);
+        state.weatherToday = getDataWeatherToday(action.payload);
 
-        state.weatherToday.clouds = action.payload.list[0].clouds.all;
-        state.weatherToday.main.max = action.payload.list[0].main.temp_max;
-        state.weatherToday.main.min = action.payload.list[0].main.temp_min;
-        state.weatherToday.main.tempNow = action.payload.list[0].main.temp;
-        state.weatherToday.main.humidity = action.payload.list[0].main.humidity;
-        state.weatherToday.visibility = action.payload.list[0].visibility;
-        state.weatherToday.wind = action.payload.list[0].wind.speed;
-        state.weatherToday.weather = action.payload.list[0].weather[0];
-
-        state.weatherToday.weatherInterval = getForeCastForToday(
-          action.payload.list
+        state.HourlyForecast = getForeCastForToday(
+          action.payload.list,
+          action.payload.city.timezone
         );
 
-        state.forecastForWeek = getWeatherWeek(action.payload.list);
+        state.forecastForWeek = getWeatherWeek(
+          action.payload.list,
+          action.payload.city.timezone
+        );
       }
     );
   },
@@ -109,26 +115,35 @@ export const weatherSelector = (state: RootState) => {
     lon: state.weatherSlice.location.lon,
     city: state.weatherSlice.location.city,
     country: state.weatherSlice.location.country,
-    sunset: state.weatherSlice.weatherToday.sun.sunset,
-    sunrise: state.weatherSlice.weatherToday.sun.sunrise,
+    sunset: state.weatherSlice.weatherToday.sunset,
+    sunrise: state.weatherSlice.weatherToday.sunrise,
     forecastForWeek: state.weatherSlice.forecastForWeek,
+    measurement: state.weatherSlice.measurement,
+    measurementSign: state.weatherSlice.measurementSign,
+    timezone: state.weatherSlice.location.timezone,
   };
 };
 
 export const getCurrentWeatherTodaySelector = (state: RootState) => {
   return {
-    tepmMin: Math.round(state.weatherSlice.weatherToday.main.min),
-    tepmMax: Math.round(state.weatherSlice.weatherToday.main.max),
-    humidity: state.weatherSlice.weatherToday.main.humidity,
+    tepmMin: Math.round(state.weatherSlice.weatherToday.temp_min),
+    tepmMax: Math.round(state.weatherSlice.weatherToday.temp_max),
+    humidity: state.weatherSlice.weatherToday.humidity,
     wind: Math.round(state.weatherSlice.weatherToday.wind),
     cloud: state.weatherSlice.weatherToday.clouds,
     visible: state.weatherSlice.weatherToday.visibility,
-    temp: Math.round(state.weatherSlice.weatherToday.main.tempNow),
-    weather: state.weatherSlice.weatherToday.weather,
-    weatherIntervalDay: state.weatherSlice.weatherToday.weatherInterval,
+    temp: Math.round(state.weatherSlice.weatherToday.temp),
+    description: state.weatherSlice.weatherToday.description,
+    icon: state.weatherSlice.weatherToday.icon,
+    HourlyForecast: state.weatherSlice.HourlyForecast,
   };
 };
 
-export const { setCoordinates } = weatherSlice.actions;
+export const {
+  setSearchCoordinate,
+  setCoordinates,
+  setMeasurement,
+  setMeasurementSign,
+} = weatherSlice.actions;
 
 export default weatherSlice.reducer;

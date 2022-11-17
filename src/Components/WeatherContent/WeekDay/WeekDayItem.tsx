@@ -11,19 +11,21 @@ const WeekDayItem = ({
   weatherIcon,
   maxTemp,
   mintemp,
+  timezone,
   tab,
 }: dayItemProps) => {
   return (
     <div
       className={
         "week__day-item-box " +
-        (tab === "day" || tab === "week" ? "activeTab" : "")
+        (tab === "day" || tab === "week" ? "activeTab " : "") +
+        (isWeekDayTab ? " week" : "")
       }
     >
-      <h6 className="week__day-item-day">
+      <h6 className={"week__day-item-day "}>
         {isWeekDayTab
-          ? weekDay[new Date(+periodTimeOfday * 1000).getDay()]
-          : getCurrentTime(periodTimeOfday)}
+          ? weekDay[new Date(+periodTimeOfday * 1000).getDay()].slice(0, 3)
+          : getCurrentTime(periodTimeOfday, timezone)}
       </h6>
       <img className="week__day-item-img" src={weatherIcon} alt="sunny" />
       <div className="week__day-item-temp-box">

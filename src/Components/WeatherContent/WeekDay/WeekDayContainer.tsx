@@ -13,8 +13,8 @@ type WeekDayContainerProps = {
 };
 
 const WeekDayContainer = ({ tab }: WeekDayContainerProps) => {
-  const { weatherIntervalDay } = useAppSelector(getCurrentWeatherTodaySelector);
-  const { forecastForWeek } = useAppSelector(weatherSelector);
+  const { HourlyForecast } = useAppSelector(getCurrentWeatherTodaySelector);
+  const { forecastForWeek, timezone } = useAppSelector(weatherSelector);
   return (
     <div
       className={
@@ -23,9 +23,10 @@ const WeekDayContainer = ({ tab }: WeekDayContainerProps) => {
       }
     >
       {tab === "day"
-        ? weatherIntervalDay.map((item: listItemWeather, index) => {
+        ? HourlyForecast.map((item: listItemWeather, index) => {
             return (
               <WeekDayItem
+                timezone={timezone}
                 tab={tab}
                 isWeekDayTab={false}
                 key={index}

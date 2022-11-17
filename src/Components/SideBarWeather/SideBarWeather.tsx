@@ -13,8 +13,10 @@ import {
 import { getWeatherIcon } from "../../Data/weatherIconsData";
 import { getCurrentTime } from "../../Data/converDate";
 import InputComp from "./Input";
+import { SearchCityFields } from "../../Types/types";
 
 interface SideBarWeatherProps {
+  getWeatherOnSearchCity: (event: React.ChangeEvent<HTMLInputElement>) => void;
   icon: string;
   temp: number;
   city: string;
@@ -22,33 +24,34 @@ interface SideBarWeatherProps {
   date: string | number;
   description: string;
   cloud: number;
+  isLoadingSearchCity: boolean;
+  searchCities: SearchCityFields[];
+  measurementSign: string;
+  timezone: number;
 }
 
 const SideBarWeather = ({
+  getWeatherOnSearchCity,
   icon,
   country,
   cloud,
   date,
   temp,
   description,
+  searchCities,
   city,
+  isLoadingSearchCity,
+  measurementSign,
+  timezone,
 }: SideBarWeatherProps) => {
   return (
     <div className="sidebar__inner">
       <div className="sidebar__top">
-        <div className="sidebar_box--input">
-          <img src={search} alt="search" />
-          <input
-            placeholder="search for places ..."
-            className="sidebar__input"
-            type="text"
-          />
-          <InputComp />
-        </div>
-
-        <button className="sidebar__btn--home">
-          <img src={home} alt="home" />
-        </button>
+        <InputComp
+          isLoadingSearchCity={isLoadingSearchCity}
+          searchCities={searchCities}
+          getWeatherOnSearchCity={getWeatherOnSearchCity}
+        />
       </div>
       <div className="box__sidebar--weather-icon">
         <img
@@ -57,25 +60,31 @@ const SideBarWeather = ({
           alt="cloud"
         />
       </div>
-      <div className="box__sidebar__weather--info">
-        <p className="box_sidebar__weather--temperature">{temp}°</p>
-        <span className="box_sidebar__weather--temperature-format">C</span>
-        <h1 className="box_sidebar__weather--city">{city + ",  " + country}</h1>
-        <p className="box_sidebar__weather--date">
-          {weekDay[new Date().getDay()]},
-        </p>
-        <p className="box_sidebar__weather--time">
-          {getCurrentTime(Number(date) / 1000)}
-        </p>
-      </div>
-      <div>
-        <p className="clouds">
-          <img src={countOfClouds} alt="" /> Clouds - {cloud}%
-        </p>
-        <p className="clouds broken__clouds">
-          <img src={brokenCloud} alt="cloud_description" />
-          {description}
-        </p>
+      <div className="box_sidebar__weather-bottom">
+        <div className="box__sidebar__weather--info">
+          <p className="box_sidebar__weather--temperature">{temp}°</p>
+          <span className="box_sidebar__weather--temperature-format">
+            {measurementSign}
+          </span>
+          <h1 className="box_sidebar__weather--city">
+            {city + ",  " + country}
+          </h1>
+          <p className="box_sidebar__weather--date">
+            {weekDay[new Date().getDay()]},
+          </p>
+          <p className="box_sidebar__weather--time">
+            {getCurrentTime(Number(date) / 1000, timezone)}
+          </p>
+        </div>
+        <div>
+          <p className="clouds">
+            <img src={countOfClouds} alt="" /> Clouds - {cloud}%
+          </p>
+          <p className="clouds broken__clouds">
+            <img src={brokenCloud} alt="cloud_description" />
+            {description}
+          </p>
+        </div>
       </div>
     </div>
   );
