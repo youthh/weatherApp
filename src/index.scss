@@ -31,4 +31,15 @@ body, html {
   height: 100%;
 }
 
+
 @import "Style/mediaStyle";
+
+
+.loading{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.weatherActiveFetchingSidebar{
+  height: 32em;
+}

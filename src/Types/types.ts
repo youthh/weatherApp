@@ -19,6 +19,11 @@ export type SearchCityFields = {
   country: string;
 };
 
+export type MarkerProps = {
+  lon: number;
+  lat: number;
+};
+
 export type DayWeather = {
   currDay: string;
   iconWeather?: string;
@@ -27,6 +32,7 @@ export type DayWeather = {
 };
 
 export interface dayItemProps {
+  isLoadingWeather: boolean;
   isWeekDayTab: boolean;
   periodTimeOfday: number | string;
   weatherIcon: string;

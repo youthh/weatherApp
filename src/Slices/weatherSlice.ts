@@ -21,6 +21,7 @@ export const getWeatherThunk = createAsyncThunk(
 );
 
 interface initialState {
+  isLoadingWeather: boolean;
   forecastForWeek: listItemWeather[];
   HourlyForecast: listItemWeather[];
   location: Location;
@@ -39,9 +40,11 @@ interface initialState {
   };
   measurement: string;
   measurementSign: string;
+  isAllowAccessLocation: boolean;
 }
 
 const initialState: initialState = {
+  isLoadingWeather: false,
   forecastForWeek: [],
   HourlyForecast: [],
   location: {
@@ -66,6 +69,7 @@ const initialState: initialState = {
   },
   measurementSign: "C",
   measurement: "metric",
+  isAllowAccessLocation: false,
 };
 
 const weatherSlice = createSlice({
@@ -89,11 +93,18 @@ const weatherSlice = createSlice({
   },
 
   extraReducers: (builder) => {
+    builder.addCase(getWeatherThunk.pending, (state, action) => {
+      state.isLoadingWeather = true;
+    });
     builder.addCase(
       getWeatherThunk.fulfilled,
       (state, action: PayloadAction<responseGetWeather>) => {
+        state.isLoadingWeather = false;
         state.location = getDataLocation(action.payload);
-        state.weatherToday = getDataWeatherToday(action.payload);
+        state.weatherToday = getDataWeatherToday(
+          action.payload,
+          state.measurement
+        );
 
         state.HourlyForecast = getForeCastForToday(
           action.payload.list,
@@ -106,6 +117,9 @@ const weatherSlice = createSlice({
         );
       }
     );
+    builder.addCase(getWeatherThunk.rejected, (state, action) => {
+      state.isLoadingWeather = false;
+    });
   },
 });
 
@@ -121,6 +135,7 @@ export const weatherSelector = (state: RootState) => {
     measurement: state.weatherSlice.measurement,
     measurementSign: state.weatherSlice.measurementSign,
     timezone: state.weatherSlice.location.timezone,
+    isLoadingWeather: state.weatherSlice.isLoadingWeather,
   };
 };
 

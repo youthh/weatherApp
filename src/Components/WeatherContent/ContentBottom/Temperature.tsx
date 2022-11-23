@@ -11,7 +11,7 @@ type TemperatureProps = {
 
 const Temperature = ({ tepmMax, tepmMin }: TemperatureProps) => {
   return (
-    <div className="highlights__item-box">
+    <>
       <h6 className="highlights__item-title">Min & Max temperature</h6>
       <div className={"temperature__box"}>
         <img src={tempCold} alt="temp" />
@@ -21,7 +21,7 @@ const Temperature = ({ tepmMax, tepmMin }: TemperatureProps) => {
         <img src={tempHot} alt="temp" />
         <p>{tepmMax}°</p>
       </div>
-    </div>
+    </>
   );
 };
 

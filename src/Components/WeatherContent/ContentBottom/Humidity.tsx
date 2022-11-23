@@ -6,7 +6,7 @@ type HumidityProps = {
 
 const Humidity = ({ humidity }: HumidityProps) => {
   return (
-    <div className="highlights__item-box">
+    <>
       <h6 className="highlights__item-title">Humidity</h6>
       <div className="box__humidity">
         <p className="humidity">
@@ -18,7 +18,7 @@ const Humidity = ({ humidity }: HumidityProps) => {
         </div>
       </div>
       <p className="highlights__item-description">Miserable</p>
-    </div>
+    </>
   );
 };
 

@@ -12,11 +12,11 @@ import {
 import useDebounce from "../../Hooks/useDebounce";
 
 const SideBarContainer = () => {
-  const { city, country, measurementSign, timezone } =
+  const { city, country, measurementSign, timezone, isLoadingWeather } =
     useAppSelector(weatherSelector);
-  const { isLoadingSearchCity, searchCities } = useAppSelector(getSearchCities);
+  const { isLoadingSearchCity, searchCities, searchValue } =
+    useAppSelector(getSearchCities);
   const dispatch = useAppDispatch();
-  const [searchValue, setSearchValue] = useState("");
   const debouncedValue = useDebounce<string>(searchValue, 500);
 
   const { temp, cloud, description, icon } = useAppSelector(
@@ -26,13 +26,6 @@ const SideBarContainer = () => {
   setInterval(() => {
     setDate(new Date().getTime());
   }, 60000);
-
-  const getWeatherOnSearchCity = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const value = event.target.value;
-    setSearchValue(value);
-  };
 
   useEffect(() => {
     if (searchValue) {
@@ -47,13 +40,13 @@ const SideBarContainer = () => {
         measurementSign={measurementSign}
         isLoadingSearchCity={isLoadingSearchCity}
         searchCities={searchCities}
-        getWeatherOnSearchCity={getWeatherOnSearchCity}
         icon={icon}
         description={description}
         country={country}
         city={city}
         cloud={cloud}
         date={date}
+        isLoadingWeather={isLoadingWeather}
         temp={temp}
       />
     </div>

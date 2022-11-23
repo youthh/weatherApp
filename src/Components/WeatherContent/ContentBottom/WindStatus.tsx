@@ -1,4 +1,6 @@
 import React from "react";
+import { useAppSelector } from "../../../Hooks/hooks";
+import { weatherSelector } from "../../../Slices/weatherSlice";
 
 type WindStatusProps = {
   wind: number;
@@ -6,7 +8,7 @@ type WindStatusProps = {
 
 const WindStatus = ({ wind }: WindStatusProps) => {
   return (
-    <div className="highlights__item-box">
+    <>
       <h6 className="highlights__item-title">Wind Status</h6>
       <div>
         <p className="speedOfWind">
@@ -14,7 +16,7 @@ const WindStatus = ({ wind }: WindStatusProps) => {
         </p>
       </div>
       <p className="highlights__item-description">Light breeze</p>
-    </div>
+    </>
   );
 };
 

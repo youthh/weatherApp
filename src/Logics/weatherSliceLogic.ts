@@ -6,11 +6,12 @@ export const getWeatherWeek = (list: listItemWeather[], timezone: number) => {
     const utc_seconds =
       parseInt(String(day.dt), 10) + parseInt(String(timezone), 10);
     const date = new Date(utc_seconds * 1000).getUTCHours();
-    if (date === 11 || date === 13) {
+    if (date === 11 || date === 13 || date == 12) {
       list.map((item: listItemWeather) => {
         const utc_seconds2 =
           parseInt(String(item.dt), 10) + parseInt(String(timezone), 10);
         const date = new Date(utc_seconds2 * 1000).getUTCHours();
+
         if (
           date === 1 ||
           date === 4 ||
@@ -45,13 +46,20 @@ export const getForeCastForToday = (
   });
 };
 
-export const getDataWeatherToday = (data: responseGetWeather) => {
+export const getDataWeatherToday = (
+  data: responseGetWeather,
+  metrik: string
+) => {
   const { temp_min, temp_max, temp, humidity } = data.list[0].main;
   const { sunrise, sunset, timezone } = data.city;
   const clouds = data.list[0].clouds.all;
   const { icon, description } = data.list[0].weather[0];
   const visibility = data.list[0].visibility;
-  const wind = data.list[0].wind.speed;
+
+  const wind =
+    metrik === "metric"
+      ? Math.round(data.list[0].wind.speed * 3.6)
+      : Math.round(1.609344 * data.list[0].wind.speed);
 
   return {
     wind,

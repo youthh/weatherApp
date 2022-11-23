@@ -13,18 +13,24 @@ export const getSearchCityWeatherThunk = createAsyncThunk(
 type initialState = {
   isLoadingSearch: boolean;
   searchCities: SearchCityFields[];
+  searchValue: string;
 };
 
 const initialState: initialState = {
   isLoadingSearch: false,
   searchCities: [],
+  searchValue: "",
 };
 
 const searchSlice = createSlice({
   name: "search",
   initialState,
 
-  reducers: {},
+  reducers: {
+    setSearchValue: (state, action) => {
+      state.searchValue = action.payload;
+    },
+  },
 
   extraReducers: (builder) => {
     builder.addCase(getSearchCityWeatherThunk.pending, (state) => {
@@ -45,9 +51,10 @@ export const getSearchCities = (state: RootState) => {
   return {
     isLoadingSearchCity: state.searchSlice.isLoadingSearch,
     searchCities: state.searchSlice.searchCities,
+    searchValue: state.searchSlice.searchValue,
   };
 };
 
-//export const {} = searchSlice.actions;
+export const { setSearchValue } = searchSlice.actions;
 
 export default searchSlice.reducer;

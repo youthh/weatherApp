@@ -5,6 +5,7 @@
 .app__layout-inner {
   display: flex;
   align-items: flex-start;
+  transition: 0.3s;
 }
 
 .weather__content {

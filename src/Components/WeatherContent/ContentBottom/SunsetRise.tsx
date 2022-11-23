@@ -8,7 +8,7 @@ const SunsetRise = () => {
   const { sunrise, sunset, timezone } = useAppSelector(weatherSelector);
 
   return (
-    <div className="highlights__item-box">
+    <>
       <h6 className="highlights__item-title">Sunrise & Sunset</h6>
       <div className="temp_max-box">
         <img src={ArrowTop} alt="arrow" />
@@ -18,7 +18,7 @@ const SunsetRise = () => {
         <img src={ArrowBot} alt="arrow" />
         <p>{getCurrentTime(sunset, timezone)}</p>
       </div>
-    </div>
+    </>
   );
 };
 

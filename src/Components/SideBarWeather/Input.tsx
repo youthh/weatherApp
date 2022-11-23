@@ -9,17 +9,14 @@ import {
 } from "../../Slices/weatherSlice";
 import { useAppDispatch, useAppSelector } from "../../Hooks/hooks";
 import { CircularProgress } from "@mui/material";
+import { setSearchValue } from "../../Slices/searchSlice";
+import { useMap, useMapEvents } from "react-leaflet";
 type InputCompProps = {
   searchCities: SearchCityFields[];
-  getWeatherOnSearchCity: (event: React.ChangeEvent<HTMLInputElement>) => void;
   isLoadingSearchCity: boolean;
 };
 
-const InputComp = ({
-  isLoadingSearchCity,
-  getWeatherOnSearchCity,
-  searchCities,
-}: InputCompProps) => {
+const InputComp = ({ isLoadingSearchCity, searchCities }: InputCompProps) => {
   const dispatch = useAppDispatch();
   const { measurement } = useAppSelector(weatherSelector);
 
@@ -32,7 +29,7 @@ const InputComp = ({
         className="sidebar__input"
         type="text"
         onChange={(event) => {
-          getWeatherOnSearchCity(event);
+          dispatch(setSearchValue(event.target.value));
           setShowInputSearchFilter(event.target.value);
         }}
       />

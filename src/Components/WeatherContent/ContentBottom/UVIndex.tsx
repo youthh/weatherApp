@@ -3,7 +3,7 @@ import value from "../../../Images/uvIndexImg.svg";
 
 const UvIndex = () => {
   return (
-    <div className="highlights__item-box">
+    <>
       <h6 className="highlights__item-title">UV Index</h6>
       <div className="half-circle">
         <div className="value_circle"></div>
@@ -13,7 +13,7 @@ const UvIndex = () => {
         <p className="uvIndexValueNumber twelve">12</p>
         <p className="uvIndex_value">7</p>
       </div>
-    </div>
+    </>
   );
 };
 
