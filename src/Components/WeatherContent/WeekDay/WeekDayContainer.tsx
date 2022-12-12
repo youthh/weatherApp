@@ -1,19 +1,19 @@
 import React from "react";
 import WeekDayItem from "./WeekDayItem";
-import { useAppSelector } from "../../../Hooks/hooks";
+import { useAppSelector } from "../../../Hooks/hooksRedux";
 import {
-  getCurrentWeatherTodaySelector,
+  CurrentWeatherTodaySelector,
   weatherSelector,
 } from "../../../Slices/weatherSlice";
 import { getWeatherIcon } from "../../../Data/weatherIconsData";
-import { listItemWeather } from "../../../Types/types";
+import { listItemWeather } from "../../../Data/Interface/interface";
 
 type WeekDayContainerProps = {
   tab: string;
 };
 
 const WeekDayContainer = ({ tab }: WeekDayContainerProps) => {
-  const { HourlyForecast } = useAppSelector(getCurrentWeatherTodaySelector);
+  const { HourlyForecast } = useAppSelector(CurrentWeatherTodaySelector);
   const { forecastForWeek, timezone, isLoadingWeather } =
     useAppSelector(weatherSelector);
   return (

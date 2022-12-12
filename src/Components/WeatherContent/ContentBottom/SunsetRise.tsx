@@ -1,7 +1,7 @@
 import React from "react";
 import ArrowTop from "../../../Images/ArrowTop.svg";
 import ArrowBot from "../../../Images/ArrowBottom.svg";
-import { useAppSelector } from "../../../Hooks/hooks";
+import { useAppSelector } from "../../../Hooks/hooksRedux";
 import { weatherSelector } from "../../../Slices/weatherSlice";
 import { getCurrentTime } from "../../../Data/converDate";
 const SunsetRise = () => {

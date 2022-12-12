@@ -1,5 +1,7 @@
-import { listItemWeather, responseGetWeather } from "../Types/types";
-import { getCurrentTime } from "../Data/converDate";
+import {
+  listItemWeather,
+  responseGetWeather,
+} from "../Data/Interface/interface";
 
 export const getWeatherWeek = (list: listItemWeather[], timezone: number) => {
   return list.filter((day: listItemWeather) => {

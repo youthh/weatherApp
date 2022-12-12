@@ -6,8 +6,8 @@ import brokenCloud from "../../Images/brokenCloud.svg";
 import { weekDay } from "../../Data/WeekDay";
 import { getWeatherIcon } from "../../Data/weatherIconsData";
 import { getCurrentTime } from "../../Data/converDate";
-import InputComp from "./Input";
-import { SearchCityFields } from "../../Types/types";
+import WeatherInput from "./WeatherInput";
+import { SearchCityFields } from "../../Data/Types/types";
 import { CircularProgress } from "@mui/material";
 
 interface SideBarWeatherProps {
@@ -54,7 +54,7 @@ const SideBarWeather = ({
       ) : (
         <>
           <div className="sidebar__top">
-            <InputComp
+            <WeatherInput
               isLoadingSearchCity={isLoadingSearchCity}
               searchCities={searchCities}
             />

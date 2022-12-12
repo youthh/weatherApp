@@ -5,9 +5,9 @@ import SunsetRise from "./SunsetRise";
 import Humidity from "./Humidity";
 import Visibility from "./Visibility";
 import Temperature from "./Temperature";
-import { useAppSelector } from "../../../Hooks/hooks";
+import { useAppSelector } from "../../../Hooks/hooksRedux";
 import {
-  getCurrentWeatherTodaySelector,
+  CurrentWeatherTodaySelector,
   weatherSelector,
 } from "../../../Slices/weatherSlice";
 import SimpleMap from "../Map/GoogleMap";

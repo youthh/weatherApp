@@ -9,9 +9,9 @@ import {
   useMap,
   useMapEvents,
 } from "react-leaflet";
-import { useAppDispatch, useAppSelector } from "../../../Hooks/hooks";
+import { useAppDispatch, useAppSelector } from "../../../Hooks/hooksRedux";
 import { getWeatherThunk, weatherSelector } from "../../../Slices/weatherSlice";
-import { MarkerProps } from "../../../Types/types";
+import { MarkerProps } from "../../../Data/Types/types";
 
 function MyMarker() {
   const { lat, lon, measurement } = useAppSelector(weatherSelector);

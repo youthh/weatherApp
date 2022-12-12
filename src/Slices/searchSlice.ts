@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getSearchWeatherCity } from "../Api/weatherService";
-import { SearchCityFields } from "../Types/types";
+import { SearchCityFields } from "../Data/Types/types";
 import { RootState } from "../Redux/store";
 
 export const getSearchCityWeatherThunk = createAsyncThunk(
@@ -16,7 +16,7 @@ type initialState = {
   searchValue: string;
 };
 
-const initialState: initialState = {
+const initialSearchState: initialState = {
   isLoadingSearch: false,
   searchCities: [],
   searchValue: "",
@@ -24,7 +24,7 @@ const initialState: initialState = {
 
 const searchSlice = createSlice({
   name: "search",
-  initialState,
+  initialState: initialSearchState,
 
   reducers: {
     setSearchValue: (state, action) => {
@@ -47,7 +47,7 @@ const searchSlice = createSlice({
   },
 });
 
-export const getSearchCities = (state: RootState) => {
+export const SearchCitiesSelector = (state: RootState) => {
   return {
     isLoadingSearchCity: state.searchSlice.isLoadingSearch,
     searchCities: state.searchSlice.searchCities,

@@ -1,7 +1,7 @@
 import React from "react";
 import tempHot from "../../../Images/tempHot.svg";
 import tempCold from "../../../Images/tempCold.svg";
-import { useAppSelector } from "../../../Hooks/hooks";
+import { useAppSelector } from "../../../Hooks/hooksRedux";
 import { weatherSelector } from "../../../Slices/weatherSlice";
 
 type TemperatureProps = {

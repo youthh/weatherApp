@@ -6,7 +6,7 @@
 .app__layout-inner{
   display: flex;
   align-items: flex-start;
-  transition: .3s;
+  transition: all .3s;
 }
 
 .weather__content{
@@ -16,7 +16,7 @@
   padding: 30px 30px 0 40px;
 }
 
-.boxCircle{
+.box_circle{
   display: flex;
   justify-content: center;
   align-items: center;

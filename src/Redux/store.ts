@@ -1,10 +1,10 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
-import weatherSlice from "../Slices/weatherSlice";
+import weather from "../Slices/weatherSlice";
 import searchSlice from "../Slices/searchSlice";
 
 export const store = configureStore({
   reducer: {
-    weatherSlice,
+    weather,
     searchSlice,
   },
 });

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import SideBarWeather from "./SideBarWeather";
-import { useAppDispatch, useAppSelector } from "../../Hooks/hooks";
+import { useAppDispatch, useAppSelector } from "../../Hooks/hooksRedux";
 import {
-  getCurrentWeatherTodaySelector,
+  CurrentWeatherTodaySelector,
   weatherSelector,
 } from "../../Slices/weatherSlice";
 import {
-  getSearchCities,
+  SearchCitiesSelector,
   getSearchCityWeatherThunk,
 } from "../../Slices/searchSlice";
 import useDebounce from "../../Hooks/useDebounce";
@@ -15,14 +15,14 @@ const SideBarContainer = () => {
   const { city, country, measurementSign, timezone, isLoadingWeather } =
     useAppSelector(weatherSelector);
   const { isLoadingSearchCity, searchCities, searchValue } =
-    useAppSelector(getSearchCities);
+    useAppSelector(SearchCitiesSelector);
   const dispatch = useAppDispatch();
   const debouncedValue = useDebounce<string>(searchValue, 500);
 
   const { temp, cloud, description, icon } = useAppSelector(
-    getCurrentWeatherTodaySelector
+    CurrentWeatherTodaySelector
   );
-  const [date, setDate] = useState<number | string>(new Date().getTime());
+  const [date, setDate] = useState<number>(new Date().getTime());
   setInterval(() => {
     setDate(new Date().getTime());
   }, 60000);

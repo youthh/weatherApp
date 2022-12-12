@@ -1,22 +1,20 @@
 import React, { useState } from "react";
 import search from "../../Images/SearchIcon.svg";
 import "./SideBarWeather.css";
-import { SearchCityFields } from "../../Types/types";
-import {
-  getWeatherThunk,
-  setSearchCoordinate,
-  weatherSelector,
-} from "../../Slices/weatherSlice";
-import { useAppDispatch, useAppSelector } from "../../Hooks/hooks";
+import { SearchCityFields } from "../../Data/Types/types";
+import { getWeatherThunk, weatherSelector } from "../../Slices/weatherSlice";
+import { useAppDispatch, useAppSelector } from "../../Hooks/hooksRedux";
 import { CircularProgress } from "@mui/material";
 import { setSearchValue } from "../../Slices/searchSlice";
-import { useMap, useMapEvents } from "react-leaflet";
 type InputCompProps = {
   searchCities: SearchCityFields[];
   isLoadingSearchCity: boolean;
 };
 
-const InputComp = ({ isLoadingSearchCity, searchCities }: InputCompProps) => {
+const WeatherInput = ({
+  isLoadingSearchCity,
+  searchCities,
+}: InputCompProps) => {
   const dispatch = useAppDispatch();
   const { measurement } = useAppSelector(weatherSelector);
 
@@ -73,4 +71,4 @@ const InputComp = ({ isLoadingSearchCity, searchCities }: InputCompProps) => {
   );
 };
 
-export default InputComp;
+export default WeatherInput;

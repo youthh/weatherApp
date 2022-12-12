@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getWeather } from "../Api/weatherService";
-import { listItemWeather, Location, responseGetWeather } from "../Types/types";
+import { Location } from "../Data/Types/types";
 import { RootState } from "../Redux/store";
 import {
   getDataLocation,
@@ -8,14 +8,14 @@ import {
   getForeCastForToday,
   getWeatherWeek,
 } from "../Logics/weatherSliceLogic";
+import {
+  listItemWeather,
+  responseGetWeather,
+} from "../Data/Interface/interface";
 
 export const getWeatherThunk = createAsyncThunk(
   "weather/getWeatherThunk",
-  async (data: {
-    lat: number | null;
-    lon: number | null;
-    measurement: string;
-  }) => {
+  async (data: { lat: number; lon: number; measurement: string }) => {
     return await getWeather(data.lat, data.lon, data.measurement);
   }
 );
@@ -72,7 +72,7 @@ const initialState: initialState = {
   isAllowAccessLocation: false,
 };
 
-const weatherSlice = createSlice({
+const weather = createSlice({
   name: "weather",
   initialState,
 
@@ -100,6 +100,7 @@ const weatherSlice = createSlice({
       getWeatherThunk.fulfilled,
       (state, action: PayloadAction<responseGetWeather>) => {
         state.isLoadingWeather = false;
+
         state.location = getDataLocation(action.payload);
         state.weatherToday = getDataWeatherToday(
           action.payload,
@@ -125,40 +126,35 @@ const weatherSlice = createSlice({
 
 export const weatherSelector = (state: RootState) => {
   return {
-    lat: state.weatherSlice.location.lat,
-    lon: state.weatherSlice.location.lon,
-    city: state.weatherSlice.location.city,
-    country: state.weatherSlice.location.country,
-    sunset: state.weatherSlice.weatherToday.sunset,
-    sunrise: state.weatherSlice.weatherToday.sunrise,
-    forecastForWeek: state.weatherSlice.forecastForWeek,
-    measurement: state.weatherSlice.measurement,
-    measurementSign: state.weatherSlice.measurementSign,
-    timezone: state.weatherSlice.location.timezone,
-    isLoadingWeather: state.weatherSlice.isLoadingWeather,
+    lat: state.weather.location.lat,
+    lon: state.weather.location.lon,
+    city: state.weather.location.city,
+    country: state.weather.location.country,
+    sunset: state.weather.weatherToday.sunset,
+    sunrise: state.weather.weatherToday.sunrise,
+    forecastForWeek: state.weather.forecastForWeek,
+    measurement: state.weather.measurement,
+    measurementSign: state.weather.measurementSign,
+    timezone: state.weather.location.timezone,
+    isLoadingWeather: state.weather.isLoadingWeather,
   };
 };
 
-export const getCurrentWeatherTodaySelector = (state: RootState) => {
+export const CurrentWeatherTodaySelector = (state: RootState) => {
   return {
-    tepmMin: Math.round(state.weatherSlice.weatherToday.temp_min),
-    tepmMax: Math.round(state.weatherSlice.weatherToday.temp_max),
-    humidity: state.weatherSlice.weatherToday.humidity,
-    wind: Math.round(state.weatherSlice.weatherToday.wind),
-    cloud: state.weatherSlice.weatherToday.clouds,
-    visible: state.weatherSlice.weatherToday.visibility,
-    temp: Math.round(state.weatherSlice.weatherToday.temp),
-    description: state.weatherSlice.weatherToday.description,
-    icon: state.weatherSlice.weatherToday.icon,
-    HourlyForecast: state.weatherSlice.HourlyForecast,
+    tepmMin: Math.round(state.weather.weatherToday.temp_min),
+    tepmMax: Math.round(state.weather.weatherToday.temp_max),
+    humidity: state.weather.weatherToday.humidity,
+    wind: Math.round(state.weather.weatherToday.wind),
+    cloud: state.weather.weatherToday.clouds,
+    visible: state.weather.weatherToday.visibility,
+    temp: Math.round(state.weather.weatherToday.temp),
+    description: state.weather.weatherToday.description,
+    icon: state.weather.weatherToday.icon,
+    HourlyForecast: state.weather.HourlyForecast,
   };
 };
 
-export const {
-  setSearchCoordinate,
-  setCoordinates,
-  setMeasurement,
-  setMeasurementSign,
-} = weatherSlice.actions;
+export const { setMeasurement, setMeasurementSign } = weather.actions;
 
-export default weatherSlice.reducer;
+export default weather.reducer;

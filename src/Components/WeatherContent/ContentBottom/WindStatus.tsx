@@ -1,5 +1,5 @@
 import React from "react";
-import { useAppSelector } from "../../../Hooks/hooks";
+import { useAppSelector } from "../../../Hooks/hooksRedux";
 import { weatherSelector } from "../../../Slices/weatherSlice";
 
 type WindStatusProps = {

@@ -1,36 +1,3 @@
-export type Coordinates = {
-  lat: number | null;
-  lon: number | null;
-};
-
-export type Location = {
-  lat: number | null;
-  lon: number | null;
-  city: string;
-  country: string;
-  timezone: number;
-};
-
-export type SearchCityFields = {
-  name: string;
-  lat: number;
-  lon: number;
-  state?: string;
-  country: string;
-};
-
-export type MarkerProps = {
-  lon: number;
-  lat: number;
-};
-
-export type DayWeather = {
-  currDay: string;
-  iconWeather?: string;
-  min: number;
-  max: number;
-};
-
 export interface dayItemProps {
   isLoadingWeather: boolean;
   isWeekDayTab: boolean;

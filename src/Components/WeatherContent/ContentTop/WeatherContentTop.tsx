@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import "./WeatherContentTop.css";
-import { useAppDispatch } from "../../../Hooks/hooks";
+import { useAppDispatch } from "../../../Hooks/hooksRedux";
 import {
   getWeatherThunk,
   setMeasurement,
   setMeasurementSign,
 } from "../../../Slices/weatherSlice";
-import { Coordinates } from "../../../Types/types";
+import { Coordinates } from "../../../Data/Types/types";
 
 type WeatherContentTopProps = {
   tab: string;

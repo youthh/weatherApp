@@ -2,13 +2,11 @@ import React from "react";
 import "./App.css";
 import "./Reset.css";
 import AppLayout from "./Components/AppLayout/AppLayout";
-import InputComp from "./Components/SideBarWeather/Input";
-import { useAppSelector } from "./Hooks/hooks";
-import { getSearchCities } from "./Slices/searchSlice";
+import WeatherInput from "./Components/SideBarWeather/WeatherInput";
+import { useAppSelector } from "./Hooks/hooksRedux";
+import { SearchCitiesSelector } from "./Slices/searchSlice";
 
 function App() {
-  const { isLoadingSearchCity, searchCities } = useAppSelector(getSearchCities);
-
   return (
     <div className="App">
       <div className="container">

@@ -3,28 +3,29 @@ import "./AppLayout.css";
 import WeatherContentTop from "../WeatherContent/ContentTop/WeatherContentTop";
 import WeekDayContainer from "../WeatherContent/WeekDay/WeekDayContainer";
 import ContentBottom from "../WeatherContent/ContentBottom/ContentBottom";
-import { useAppDispatch, useAppSelector } from "../../Hooks/hooks";
+import { useAppDispatch, useAppSelector } from "../../Hooks/hooksRedux";
 import {
-  getCurrentWeatherTodaySelector,
+  CurrentWeatherTodaySelector,
   getWeatherThunk,
-  setCoordinates,
   weatherSelector,
 } from "../../Slices/weatherSlice";
-import { Box, CircularProgress } from "@mui/material";
+import { CircularProgress } from "@mui/material";
+import {
+  Visibility,
+  Humidity,
+  SunsetRise,
+  WindStatus,
+  UVIndex,
+  Temperature,
+} from "../WeatherContent/ContentBottom";
 import SideBarContainer from "../SideBarWeather/SideBarContainer";
-import UvIndex from "../WeatherContent/ContentBottom/UVIndex";
-import WindStatus from "../WeatherContent/ContentBottom/WindStatus";
-import SunsetRise from "../WeatherContent/ContentBottom/SunsetRise";
-import Humidity from "../WeatherContent/ContentBottom/Humidity";
-import Visibility from "../WeatherContent/ContentBottom/Visibility";
-import Temperature from "../WeatherContent/ContentBottom/Temperature";
 const AppLayout = () => {
   const dispatch = useAppDispatch();
   const [tab, setTab] = useState("day");
   const [isLoading, setLoading] = useState(true);
   const { measurement, lon, lat } = useAppSelector(weatherSelector);
   const { humidity, wind, tepmMax, tepmMin, visible } = useAppSelector(
-    getCurrentWeatherTodaySelector
+    CurrentWeatherTodaySelector
   );
   const options = {
     enableHighAccuracy: true,
@@ -61,7 +62,7 @@ const AppLayout = () => {
     );
   }, []);
   return isLoading ? (
-    <div className="boxCircle">
+    <div className="box_circle">
       <CircularProgress
         style={{
           opacity: isLoading ? "1" : "0",
@@ -85,7 +86,7 @@ const AppLayout = () => {
         />
         <WeekDayContainer tab={tab} />
         <ContentBottom>
-          <UvIndex />
+          <UVIndex />
           <WindStatus wind={wind} />
           <SunsetRise />
           <Humidity humidity={humidity} />
