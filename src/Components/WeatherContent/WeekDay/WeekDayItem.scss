@@ -1,16 +1,20 @@
 .week__day-item-box{
-  width: 50px;
-  height: 86px;
+  width: 120px;
+  height: 150px;
   text-align: center;
   background: #FFFFFF;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
-  padding: 16px 22px 8px 22px;
+  padding: 25px 22px 8px 22px;
   margin-right: 40px;
+  opacity: 0;
+  transition:  .3s ease-in-out;
   &:last-child{
     margin-right: 0;
   }
 }
+
+
 
 .week__day-item-temp-box{
   display: flex;
@@ -24,7 +28,7 @@
 }
 
 .week__day-item-img{
-  margin: 10px 0;
+  width: 67px;
 }
 
 .week__day-item-temp-night{
@@ -34,11 +38,18 @@
 
 .week__day-item-day{
   font-weight: 600;
+  font-size: 16px;
 }
 
 .week__day--container{
+  opacity: 0;
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 70px;
+  justify-content: flex-start;
+  margin-bottom: 130px;
   align-items: center;
+  transition:  .3s;
+}
+
+.activeTab{
+  opacity: 1;
 }

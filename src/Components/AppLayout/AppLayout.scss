@@ -1,19 +1,29 @@
 .app__layout-inner{
   background: #F6F6F8;
-  max-width: 1490px;
-  width: 100%;
-  min-height: 680px;
+
 }
 
 .app__layout-inner{
   display: flex;
   align-items: flex-start;
-
+  transition: all .3s;
 }
 
 .weather__content{
-  max-width: 1100px;
+  max-width: 1500px;
   width: 100%;
-  min-height: 700px;
+  height: 100vh;
   padding: 30px 30px 0 40px;
+}
+
+.box_circle{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.map_box{
+  height: 450px;
+  max-width: 460px;
+  width: 100%;
 }

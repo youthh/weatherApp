@@ -5,35 +5,52 @@
   margin-bottom: 25px;
 }
 
+
+.box__highlights{
+  max-width: 1600px;
+  width: 100%;
+}
+
+.box__highlights-bottom{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
 .highlights__item-box{
-  padding: 14px;
-  height: 160px;
-  margin: 0 25px 25px 0;
-  max-width: 230px;
+  padding: 23px;
+  margin: 0 20px 20px 0;
+  height: 200px;
+  max-width: 250px;
   width: 100%;
   background: #FFFFFF;
   box-shadow: 0 0 14px -4px rgba(0, 0, 0, 0.25);
   border-radius: 12px;
 
-  &:nth-last-child(3){
+  &:nth-child(3n){
     margin-right: 0;
   }
 
-  &:nth-child(4){
+  &:nth-child(n+4){
     margin-bottom: 0;
-
   }
-  &:nth-child(5){
-    margin-bottom: 0;
+}
 
-  }
+.loadingHighLightsBox{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .highlights__items{
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  max-width: 800px;
+  width: 100%;
 }
+
+
 
 .highlights__item-title{
   color: #B9B9B9;
@@ -110,7 +127,7 @@
 
 .temperature__box{
   display: flex;
-  width: 83px;
+  width: 95px;
   justify-content: space-between;
   align-items: center;
   margin-top: 17px;
@@ -123,4 +140,65 @@
   img{
     width: 18px;
   }
+}
+
+.half-circle {
+  width: 200px;
+  height: 100px;
+  margin-top: 25px;
+  border-top-left-radius: 110px;
+  border-top-right-radius: 110px;
+  border: 10px solid #F0F0F0;
+  border-bottom: 0;
+  position: relative;
+}
+
+.value_circle{
+  width: 100px;
+  height: 103px;
+
+  border-top-left-radius: 140px;
+  border: 26px solid #F9B903;
+  border-right: 0;
+  border-bottom: 0;
+  position: absolute;
+  left: -10px;
+  bottom: 3px;
+}
+
+.uvIndexValueNumber{
+  color: #B9B9B9;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 12px;
+  position: absolute;
+}
+
+.three{
+  left: -12px;
+  bottom: 51px;
+}
+
+.six{
+  bottom: 100px;
+  left: 39px;
+}
+
+.nine{
+  bottom: 100px;
+  left: 128px;
+}
+
+.twelve{
+  left: 179px;
+  bottom: 49px;
+}
+
+.uvIndex_value{
+  font-weight: 600;
+  font-size: 36px;
+  line-height: 42px;
+  position: absolute;
+  left: 44%;
+  bottom: 0;
 }

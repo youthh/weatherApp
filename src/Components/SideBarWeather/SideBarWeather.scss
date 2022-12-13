@@ -1,10 +1,15 @@
+
 .sidebar__inner{
   background: #FFFFFF;
   box-shadow: 5px 0 14px rgba(0, 0, 0, 0.1);
-  max-width: 350px;
-  width: 100%;
-  min-height: 680px;
-  padding: 30px 25px 40px 25px;
+ width: 350px;
+  height: 100vh;
+  padding: 28px 18px 29px 16px;
+}
+
+
+.weatherActiveFetchingSidebar{
+  height: 32em;
 }
 
 .sidebar__top{
@@ -14,14 +19,21 @@
 }
 
 .sidebar_box--input{
+  position: relative;
   display: flex;
   align-items: center;
   background: #F3F3F3;
-  max-width: 240px;
+  max-width: 240vw;
   width: 100%;
   height: 30px;
   border-radius: 15px;
   padding: 3px 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: .3s;
+  &:hover{
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+
+  }
 }
 
 .sidebar__input{
@@ -29,9 +41,12 @@
   border: 0;
   background: none;
   width: 85%;
+  padding: 5px 10px;
 }
 
 .sidebar__btn--home{
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
   width: 30px;
   height: 30px;
   border: 0;
@@ -41,33 +56,33 @@
 }
 
 .box__sidebar--weather-icon{
-  margin: 90px 0 70px 0;
+  margin: 50px 0 50px 0;
   text-align: center;
 }
 
 .box__sidebar__weather--info{
   border-bottom: 1px solid #B9B9B9;
-  margin-bottom: 30px;
-  padding-bottom: 40px;
+  margin-bottom: 60px;
+  padding-bottom: 50px;
 }
 
 .box_sidebar__weather--temperature{
   font-weight: 300;
-  font-size: 72px;
+  font-size: 79px;
   line-height: 84px;
   display: inline-block;
 }
 
 .box_sidebar__weather--temperature-format{
   font-weight: 300;
-  font-size: 58px;
+  font-size: 60px;
   line-height: 68px;
   display: inline-block;
 }
 
 .box_sidebar__weather--city{
   font-weight: 500;
-  font-size: 28px;
+  font-size: 30px;
   line-height: 33px;
   margin-bottom: 15px;
 }
@@ -75,7 +90,7 @@
 .box_sidebar__weather--date{
   display: inline-block;
   font-weight: 400;
-  font-size: 18px;
+  font-size: 23px;
   line-height: 21px;
 }
 
@@ -83,17 +98,66 @@
   display: inline-block;
   font-weight: 500;
   margin-left: 5px;
-  font-size: 18px;
+  font-size: 20px;
   line-height: 21px;
 
   color: #B9B9B9;
 }
 
+.box__sidebar__weather--img{
+  height: 400px;
+  max-width: 500px;
+  width: 100%;
+}
+
+
 
 .clouds{
   font-weight: 400;
-  font-size: 16px;
+  font-size: 20px;
   line-height: 19px;
   margin-bottom: 18px;
-  padding-left: 40px;
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width:  200px;
+  img{
+    margin-right: 20px;
+  }
+
+}
+
+.broken__clouds{
+  margin-bottom: 0;
+  img{
+    margin-right: 27px;
+  }
+}
+
+
+.box__search--city{
+  width: inherit;
+  border-radius: 15px;
+  height: 200px;
+  background: inherit;
+  box-shadow: 0 8px 8px rgba(0, 0, 0, 0.5);
+  position: absolute;
+  left: 0;
+  bottom: -204px;
+}
+
+.box__search--city--fetching{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.search__city--item{
+  padding: 18px 12px 10px 12px;
+  transition: .3s;
+  &:hover{
+    background: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+  }
 }
